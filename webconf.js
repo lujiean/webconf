@@ -1,9 +1,11 @@
 angular.module('demo', [])
 .controller('ExampleCtrl', function($scope) {
+    $scope.what = "kk";
     $scope.people = [
         {name:'Jon', age: 30, title: 'Developer'},
         {name:'Mike', age: 37, title: 'Manager'},
-        {name:'Allen', age: 50, title: 'CEO'}
+        {name:'Allen', age: 50, title: 'CEO'},
+        {name:'', age: '', title: ''}
         ];
     
       $scope.addPerson = function(){
@@ -18,5 +20,9 @@ angular.module('demo', [])
     
       $scope.removePerson = function(index){
         $scope.people.splice(index, 1);
-      };  
+      };
+
+      $scope.checkHide = function () {
+        return true;
+      }
 })

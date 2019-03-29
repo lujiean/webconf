@@ -1,55 +1,67 @@
 <!doctype html>
 <html ng-app="demo">
 <head>
-    <title>Hello Webconf</title>
-    <script src="https://cdn.bootcss.com/angular.js/1.4.3/angular.min.js"></script>
-    <script src="webconf.js"></script>
+   <title>Hello Webconf</title>
+   <script src="https://cdn.bootcss.com/angular.js/1.4.3/angular.min.js"></script>
+   <script src="webconf.js"></script>
 </head>
 <body ng-controller="ExampleCtrl">
-        <h1>Person List</h1>
+   <h1>Person List</h1>
     
-        <fieldset>
-           <legend>Create Person</legend>
-           <input type="text" ng-model="name" placeholder="Name" ><br />
-           <input type="number" ng-model="age" placeholder="Age" ><br />
-           <input type="text" ng-model="title" placeholder="Title" ><br />
-           <button type="button" ng-click="addPerson()">Add Person</button>
-        </fieldset>
+   <!-- <input type="text" ng-model="what" ng-value="bb"><br /> -->
+
+      <fieldset>
+         <legend>Create Person</legend>
+         <input type="text" ng-model="name" placeholder="Name" value="bb"><br />
+         <input type="number" ng-model="age" placeholder="Age" ><br />
+         <input type="text" ng-model="title" placeholder="Title" ><br />
+         <!-- <button type="button" ng-click="addPerson()">Add Person</button> -->
+      </fieldset>
     
-        <table border="1" cellpadding="10">
-           <thead>
-             <tr>
-               <th>
-                  Name
-               </th>
-               <th>
-                  Age
-              </th>
-              <th>
-                  Title
-              </th>
-              <th>
-    
-              </th>
+      <table border="1" cellpadding="5">
+         <thead>
+            <tr>
+               <th>Name</th>
+               <th>Age</th>
+               <th>Title</th>
+               <th></th>
+               <th></th>
             </tr>
-          </thead>
-          <body>
-             <tr ng-repeat="person in people">
+         </thead>
+         <body>
+            <tr ng-repeat="person in people">
+               <!-- <td>{{ person.name }}</td>
+               <td>{{ person.age }}</td>
+               <td>{{ person.title }}</td> -->
                <td>
-                 {{ person.name }}
-              </td>
-              <td>
-                 {{ person.age }}
-              </td>
-              <td>
-                 {{ person.title }}
-              </td>
-              <td>
-                 <button type="button" ng-click="removePerson($index)">Remove Person</button>
-              </td>
+                  <!-- <input type="text" ng-model="pname" placeholder="Name" ng-value="person.name"><br /> -->
+                  <input type="text" placeholder="Name" ng-value="person.name"><br />
+               </td>
+               <td>
+                  <!-- <input type="number" ng-model="page" placeholder="Age" ><br /> -->
+                  <input type="number" placeholder="Age" ng-value="person.age"><br />
+               </td>
+               <td>
+                  <!-- <input type="text" ng-model="ptitle" placeholder="Title" ><br /> -->
+                  <input type="text" placeholder="Title" ng-value="person.title"><br />
+               </td>
+               <td>
+                  <button type="button" ng-click="addPerson()" ng-hide="checkHide()">Add Person</button>
+               </td>
+               <td>
+                  <button type="button" ng-click="removePerson($index)">Remove Person</button>
+               </td>
             </tr>
-          </body>
-        </table>
-    
-      </body>
+         </body>
+      </table>
+
+      <hr>
+      <table>
+         <tr ng-repeat="x in people">
+            <td>{{ x.name }}</td>
+            <td>{{ x.age }}</td>
+            <td>{{ x.title }}</td>
+         </tr>
+      </table>
+   </body>
 </html>
