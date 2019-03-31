@@ -10,13 +10,13 @@
     
    <!-- <input type="text" ng-model="what" ng-value="bb"><br /> -->
 
-      <fieldset>
+      <!-- <fieldset>
          <legend>Create Person</legend>
          <input type="text" ng-model="name" placeholder="Name" value="bb"><br />
          <input type="number" ng-model="age" placeholder="Age" ><br />
          <input type="text" ng-model="title" placeholder="Title" ><br />
-         <!-- <button type="button" ng-click="addPerson()">Add Person</button> -->
-      </fieldset>
+         <button type="button" ng-click="addPerson()">Add Person</button>
+      </fieldset> -->
     
       <table border="1" cellpadding="5">
          <thead>
@@ -24,31 +24,43 @@
                <th>Name</th>
                <th>Age</th>
                <th>Title</th>
-               <th></th>
-               <th></th>
+               <!-- <th>Insert</th> -->
+               <!-- <th>Update</th> -->
+               <th>Delete</th>
+               <th><button type="button" ng-click="addPerson()">Add Person</button></th>
             </tr>
          </thead>
+         
          <body>
-            <tr ng-repeat="person in people">
+            <!-- <tr ng-repeat="person in people"> -->
+            <tr ng-repeat="person in model track by $index">
                <!-- <td>{{ person.name }}</td>
                <td>{{ person.age }}</td>
                <td>{{ person.title }}</td> -->
                <td>
                   <!-- <input type="text" ng-model="pname" placeholder="Name" ng-value="person.name"><br /> -->
-                  <input type="text" placeholder="Name" ng-value="person.name"><br />
+                  <!-- <input type="text" placeholder="Name" ng-value="person.name"><br /> -->
+                  <input type="text" placeholder="Name" ng-model="$parent.model[$index].name"><br />
                </td>
                <td>
                   <!-- <input type="number" ng-model="page" placeholder="Age" ><br /> -->
-                  <input type="number" placeholder="Age" ng-value="person.age"><br />
+                  <!-- <input type="number" placeholder="Age" ng-value="person.age"><br /> -->
+                  <input type="number" placeholder="Age" ng-model="$parent.model[$index].age"><br />
                </td>
                <td>
                   <!-- <input type="text" ng-model="ptitle" placeholder="Title" ><br /> -->
-                  <input type="text" placeholder="Title" ng-value="person.title"><br />
+                  <!-- <input type="text" placeholder="Title" ng-value="person.title"><br /> -->
+                  <input type="text" placeholder="Title" ng-model="$parent.model[$index].title"><br />
                </td>
+               <!-- <td> -->
+                  <!-- <button type="button" ng-click="addPerson()" ng-hide="checkHide($index)">Add Person</button> -->
+                  <!-- <button type="button" ng-click="addPerson($index)" ng-hide="checkHide($index)">Add Person</button>
+               </td> -->
+               <!-- <td>
+                  <button type="button" ng-click="updatePerson($index)" ng-hide="!checkHide($index)">Update Person</button>
+               </td> -->
                <td>
-                  <button type="button" ng-click="addPerson()" ng-hide="checkHide()">Add Person</button>
-               </td>
-               <td>
+                  <!-- <button type="button" ng-click="removePerson($index)" ng-hide="!checkHide($index)">Remove Person</button> -->
                   <button type="button" ng-click="removePerson($index)">Remove Person</button>
                </td>
             </tr>
@@ -57,11 +69,17 @@
 
       <hr>
       <table>
-         <tr ng-repeat="x in people">
+         <tr ng-repeat="x in model">
+            <!-- <td>{{ x.name }}</td>
+            <td>{{ x.age }}</td>
+            <td>{{ x.title }}</td> -->
             <td>{{ x.name }}</td>
             <td>{{ x.age }}</td>
             <td>{{ x.title }}</td>
          </tr>
       </table>
+
+      <p>{{model[0].name }} age is a {{ model[0].age }}, and title is {{model[0].title}}</p>
+
    </body>
 </html>
