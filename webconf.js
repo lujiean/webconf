@@ -8,10 +8,10 @@ angular.module('demo', [])
     //     {name:'', age: '', title: ''}
     //     ];
     $scope.model=[
-        {name:'Jon', age: 30, title: 'Developer'},
-        {name:'Mike', age: 37, title: 'Manager'},
-        {name:'Allen', age: 50, title: 'CEO'},
-        {name:'', age: '', title: ''}
+        {type:'Jon', hb: '30', bdesc: 'Developer', ele: 'eleme1'},
+        {type:'Mike', hb: '37', bdesc: 'Manager', ele: 'eleme2'},
+        {type:'Allen', hb: '50', bdesc: 'CEO', ele: 'eleme3'},
+        {type:'', hb: '', bdesc: '', ele: ''}
     ];
     // $scope.name=['Jon','Mike','Allen',null];
     // $scope.age=[30, 37, 50, null];
@@ -20,11 +20,12 @@ angular.module('demo', [])
     $scope.addPerson = function(){
       // if (isUndefinedOrNull($scope.name[index]))
       //   return;
-      // var person = {
-      //     name: $scope.name,
-      //     age: $scope.age,
-      //     title: $scope.title,
-      // };
+      var m = {
+        type: '',
+        hb: '',
+        bdesc: '',
+        ele: ''
+      };
   
       // $scope.people.pop();
       // $scope.people.push(person);
@@ -33,7 +34,7 @@ angular.module('demo', [])
       // $scope.age.splice(1, 0, null);
       // $scope.title.splice(1, 0, null);
       // $scope.model.splice($scope.model.length - 1, 0, null);
-      $scope.model.push({name:'', age: '', title: ''});
+      $scope.model.push(m);
       // $scope.age.splice($scope.age.length - 1, 0, null);
       // $scope.title.splice($scope.title.length - 1, 0, null);
       
