@@ -19,6 +19,7 @@
       </fieldset> -->
     
       <!-- <table border="1" cellpadding="0"> -->
+      <button type="button" ng-click="addPerson()">Add Person</button>
       <table border="0">
          <thead>
             <tr>
@@ -30,7 +31,7 @@
                <!-- <th>Insert</th> -->
                <!-- <th>Update</th> -->
                <!-- <th>Delete</th> -->
-               <th><button type="button" ng-click="addPerson()">Add Person</button></th>
+               
             </tr>
          </thead>
          
@@ -86,6 +87,7 @@
             <td>{{ x.title }}</td> -->
          </tr>
       </table>
+      <button type="button" ng-click="cpToClipBoard()">Copy to ClipBoard</button>
 
       <!-- <p>{{model[0].name }} age is a {{ model[0].age }}, and title is {{model[0].title}}</p> -->
 
