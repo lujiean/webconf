@@ -89,7 +89,11 @@
       </table>
       <button type="button" ng-click="cpToClipBoard()">Copy to ClipBoard</button>
 
+      <hr>
       <!-- <p>{{model[0].name }} age is a {{ model[0].age }}, and title is {{model[0].title}}</p> -->
+      <input type="file" id="files" style="display: none" onchange="fileImport();">
+      <button type = "button" ng-click="readfile()">Read file</button>
+      <div id="aa"></div>
 
    </body>
 </html>

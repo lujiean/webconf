@@ -62,6 +62,17 @@ angular.module('demo', [])
     //   else
     //     return false;
     // }
+    $scope.readfile = function () {
+      var fso, ts, s ; 
+      var ForReading = 1; 
+
+      fso = new ActiveXObject("Scripting.FileSystemObject"); 
+      // ts = fso.OpenTextFile("d:\\testfile.txt", ForReading); 
+      ts = fso.OpenTextFile(".\\config.cfg", ForReading); 
+      s = ts.ReadLine(); 
+      document.getElementById("aa").innerHTML=s; 
+    }
+
 })
 
 // function isUndefinedOrNull(a){
