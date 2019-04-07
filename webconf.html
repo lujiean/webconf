@@ -90,10 +90,14 @@
       <button type="button" ng-click="cpToClipBoard()">Copy to ClipBoard</button>
 
       <hr>
+
       <!-- <p>{{model[0].name }} age is a {{ model[0].age }}, and title is {{model[0].title}}</p> -->
-      <input type="file" id="files" style="display: none" onchange="fileImport();">
-      <button type = "button" ng-click="readfile()">Read file</button>
-      <div id="aa"></div>
+    <div>
+        <input type="file" name="./config.cfg" id="file-input" />
+        <button type = "button" ng-click="rf()">Read file</button><input type="text" ng-model="filename">
+        <h3>Contents of the file:</h3>
+        <pre id="file-content"></pre>
+    </div>
 
    </body>
 </html>

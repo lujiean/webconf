@@ -62,17 +62,66 @@ angular.module('demo', [])
     //   else
     //     return false;
     // }
-    $scope.readfile = function () {
-      var fso, ts, s ; 
-      var ForReading = 1; 
+    // $scope.readfile = function () {
+    //   var fso, ts, s ; 
+    //   var ForReading = 1; 
 
-      fso = new ActiveXObject("Scripting.FileSystemObject"); 
-      // ts = fso.OpenTextFile("d:\\testfile.txt", ForReading); 
-      ts = fso.OpenTextFile(".\\config.cfg", ForReading); 
-      s = ts.ReadLine(); 
-      document.getElementById("aa").innerHTML=s; 
+    //   fso = new ActiveXObject("Scripting.FileSystemObject"); 
+    //   // ts = fso.OpenTextFile("d:\\testfile.txt", ForReading); 
+    //   ts = fso.OpenTextFile(".\\config.cfg", ForReading); 
+    //   s = ts.ReadLine(); 
+    //   document.getElementById("aa").innerHTML=s; 
+    // }
+
+    function readSingleFile(e) {
+      var file = e.target.files[0];
+      if (!file) {
+          return;
+      }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+          var contents = e.target.result;
+          displayContents(contents);
+      };
+      reader.readAsText(file);
     }
 
+    function displayContents(contents) {
+        var element = document.getElementById('file-content');
+        element.textContent = contents;
+    }
+
+    document.getElementById('file-input')
+    .addEventListener('change', readSingleFile, false);
+
+    //test my file
+    $scope.filename="C:\\Users\\sqpz\\Documents\\Java\\webconf\\config.cfg";
+    $scope.rf = function () {
+      var element = document.getElementById('file-content');
+      element.textContent = $scope.filename;
+      readFileByFilePath($scope.filename);
+    }
+
+    function readFileByFilePath(f) {
+      // var file = e.target.files[0];
+      // if (!file) {
+      //     return;
+      // }
+
+      // var blob = new Blob(byteArrays, { type: contentType });
+      var blob = new Blob();
+      var file = new File([blob], f, {type: "text", lastModified: Date.now()});
+
+      // var file = new File(f);
+      var reader = new FileReader();
+      reader.onload = function(e) {
+          var contents = e.target.result;
+          displayContents(contents);
+      };
+
+      reader.readAsText(file);
+    }
+    //test my file
 })
 
 // function isUndefinedOrNull(a){
