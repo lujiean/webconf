@@ -72,6 +72,32 @@ angular.module('SPCall', [])
 //     //test my file
 // })
 .controller('SPCtrl', function($scope, $http) {
+
+    $scope.lsps = [{
+        "name":"sp_test",
+        "listOfColumns":
+        [
+            {
+                "seq":1,
+                "name":"pol_no",
+                "def":1,
+                "optional":false
+                },
+            {
+                "seq":2,
+                "name":"mvmt_no",
+                "def":2,
+                "optional":false
+                },
+            {
+                "seq":3,
+                "name":"is_bb_define",
+                "def":1,
+                "optional":true
+            }
+        ]
+    }];
+
     $http.get('SPInput.json').
     then(function(response) {
         // $scope.greeting = response.data;

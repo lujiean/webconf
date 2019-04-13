@@ -1,4 +1,4 @@
-{
+[{
     "name":"sp_test",
     "listOfColumns":
     [
@@ -21,4 +21,4 @@
             "optional":true
         }
     ]
-}
+}]

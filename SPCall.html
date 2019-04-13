@@ -4,12 +4,31 @@
    <title>SPCall</title>
    <script src="https://cdn.bootcss.com/angular.js/1.4.3/angular.min.js"></script>
    <script src="SPCall.js"></script>
-   <script src="SPInput.json"></script>
+   <!-- <script src="SPInput.json"></script> -->
 </head>
 
 <body ng-controller="SPCtrl">
+   <table ng-repeat="i in sps">
+      <tr >
+         <td>{{ i.name }}</td>
+         <!-- <td>{{ i.listOfColumns }}</td> -->
+      </tr>
+
+      <tr ng-repeat="j in i.listOfColumns">
+            <td>{{ j.seq }}</td>
+            <td>{{ j.name }}</td>
+            <td>{{ j.def }}</td>
+            <td>{{ j.optional }}</td>
+      </tr>
+   </table>
+   <hr>
+   <!-- <p ng-repeat="i in sps">
+      {{ i.seq }}
+      {{ i. listOfColumns }}
+   </p>
+   <hr> -->
    <table>
-      <tr ng-repeat="i in sps">
+      <tr ng-repeat="i in lsps">
          <td>{{ i.name }}</td>
       </tr>
    </table>
