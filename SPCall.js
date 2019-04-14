@@ -103,4 +103,19 @@ angular.module('SPCall', [])
         // $scope.greeting = response.data;
         $scope.sps = response.data;
     });
+
+    function checkDefine(d){
+        var rtn_type = "";
+        switch (d) {
+            case 1:
+            rtn_type = "text";
+                break;
+        
+                case 2:
+                rtn_type = "number";
+            default:
+                break;
+        }
+        return rtn_type;
+    }
 })

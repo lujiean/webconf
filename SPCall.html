@@ -17,8 +17,20 @@
       <tr ng-repeat="j in i.listOfColumns">
             <td>{{ j.seq }}</td>
             <td>{{ j.name }}</td>
-            <td>{{ j.def }}</td>
+            <td>{{ j.define }}</td>
+            <td>{{ j.length }}</td>
             <td>{{ j.optional }}</td>
+      </tr>
+
+      <tr>
+         <td>
+            call {{i.name}} (
+               <p ng-repeat="j in i.listOfColumns">
+                   <!-- <input type="text" placeholder={{j.name}}>, -->
+                   <input type="checkDefine()" placeholder={{j.name}}>,
+               </p>
+                  );
+         </td> 
       </tr>
    </table>
    <hr>
