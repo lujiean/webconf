@@ -7,83 +7,66 @@
    <!-- <script src="SPInput.json"></script> -->
 </head>
 
-<body ng-controller="SPCtrl">
-   <table ng-repeat="i in sps">
-      <tr >
-         <td>{{ i.name }}</td>
+<body>
+   <div ng-app="SPCall" ng-controller="SPCtrl">
+      <!-- drop dow list TBC -->
+      <table ng-repeat="i in sps">
+         <!-- <tr >
+            <td>{{ i.name }}</td> -->
          <!-- <td>{{ i.listOfColumns }}</td> -->
-      </tr>
-
-      <tr ng-repeat="j in i.listOfColumns">
+         <!-- </tr> -->
+      <!-- <tr ng-repeat="j in i.listOfColumns">
             <td>{{ j.seq }}</td>
             <td>{{ j.name }}</td>
             <td>{{ j.define }}</td>
             <td>{{ j.length }}</td>
             <td>{{ j.optional }}</td>
-      </tr>
-
-      <tr>
-         <td>
-            call {{i.name}} (
-               <p ng-repeat="j in i.listOfColumns">
-                   <!-- <input type="text" placeholder={{j.name}}>, -->
-                   <input type="checkDefine()" placeholder={{j.name}}>,
-               </p>
-                  );
-         </td> 
-      </tr>
-   </table>
-   <hr>
+      </tr> -->
+         <tr>
+            <td>
+               <!-- <p>use create input tag</p> -->
+               call {{i.name}} (
+                  <div ng-repeat="j in i.listOfColumns">
+                   <!-- <input type="checkDefine()" placeholder={{j.name}} ng-model="$parent.i.listOfColumns[$index].{{j.name}}">, -->
+                   <!-- <p ng-hide="{{ checkType(j.define) }}" ng-value='"'> -->
+                        <!-- <div>"</div> -->
+                     <div style="display:inline" ng-if="j.define == 'text'">"</div><!--
+                     --><input type="{{j.define}}" placeholder={{j.name}} ng-model="$parent.LOCs[$index].val"><!--
+                     --><div style="display:inline"  ng-if="j.define == 'text'">"</div><!--
+                     --><div style="display:inline" ng-if="$index != (i.listOfColumns.length-1)">,</div>
+                  </div>
+               );
+            </td> 
+         </tr>
+         <hr>
+         <tr>
+            <td>
+                  <!-- <p>use create input tag</p> -->
+               call {{i.name}} (
+                  <div ng-repeat="j in i.listOfColumns">
+                      <!-- <input type="checkDefine()" placeholder={{j.name}} ng-model="$parent.i.listOfColumns[$index].{{j.name}}">, -->
+                      <!-- <p ng-hide="{{ checkType(j.define) }}" ng-value='"'> -->
+                           <!-- <div>"</div> -->
+                     <div style="display:inline" ng-if="j.define == 'text'">"</div><!--
+                     -->{{ LOCs[$index].val }}<!--
+                     --><div style="display:inline"  ng-if="j.define == 'text'">"</div><!--
+                     --><div style="display:inline" ng-if="$index != (i.listOfColumns.length-1)">,</div>
+                  </div>
+               );
+            </td> 
+         </tr>
+      </table>
+      <hr>
    <!-- <p ng-repeat="i in sps">
       {{ i.seq }}
       {{ i. listOfColumns }}
    </p>
    <hr> -->
-   <table>
-      <tr ng-repeat="i in lsps">
-         <td>{{ i.name }}</td>
-      </tr>
-   </table>
+      <!-- <table>
+         <tr ng-repeat="i in lsps">
+            <td>{{ i.name }}</td>
+         </tr>
+      </table> -->
+   </div>
 </body>
-
-<!-- <body ng-controller="ExampleCtrl">
-   <h1>Person List</h1>
-      <table>
-         <tr ng-repeat="person in model track by $index">
-            <td>
-               <p>$parent.model[$index].type</p><br />
-            </td>
-            <td>
-               <input type="text" placeholder="N-Hide, Y-Not hide" ng-model="$parent.model[$index].hb"><br />
-            </td>
-            <td>
-               <input type="text" placeholder="Button Description" ng-model="$parent.model[$index].bdesc"><br />
-            </td>
-            <td>
-               <input type="text" placeholder="Input if: 1-folder path, 3-file location, 4-program exe path, 5-putty config file, 2-open All" ng-model="$parent.model[$index].ele"><br />
-            </td>
-            <td>
-               <button type="button" ng-click="removePerson($index)">Remove</button>
-            </td>
-         </tr>
-      </table>
-
-      <hr>
-      <table>
-         <tr ng-repeat="x in model">
-            <td>{{ x.type }},{{ x.hb }},{{ x.bdesc }},{{ x.ele }}</td>
-         </tr>
-      </table>
-      <button type="button" ng-click="cpToClipBoard()">Copy to ClipBoard</button>
-
-      <hr>
-
-    <div>
-        <input type="file" name="./config.cfg" id="file-input" />
-        <button type = "button" ng-click="rf()">Read file</button><input type="text" ng-model="filename">
-        <h3>Contents of the file:</h3>
-        <pre id="file-content"></pre>
-    </div>
-
-   </body> -->
 </html>

@@ -73,6 +73,9 @@ angular.module('SPCall', [])
 // })
 .controller('SPCtrl', function($scope, $http) {
 
+    // json format need match html
+    // ng-repeat --> []
+    // dirct use --> no []
     $scope.lsps = [{
         "name":"sp_test",
         "listOfColumns":
@@ -118,4 +121,24 @@ angular.module('SPCall', [])
         }
         return rtn_type;
     }
+
+    function checkQuoteShow(d){
+        if (d == "text"){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    // AddElement("text");
+
+    // function AddElement(mytype){  
+    //     var mytype,TemO=document.getElementById("add");  
+    //     var newInput = document.createElement("input");   
+    //     newInput.type=mytype;   
+    //     newInput.name="input1";  
+    //     TemO.appendChild(newInput);  
+    //     var newline= document.createElement("br");//创建一个BR标签是为能够换行！  
+    //     TemO.appendChild(newline);  
+    //     }  
 })

@@ -5,21 +5,21 @@
         {
             "seq":1,
             "name":"pol_no",
-            "define":1,
+            "define":"text",
             "length":16,
             "optional":false
             },
         {
             "seq":2,
             "name":"mvmt_no",
-            "define":2,
+            "define":"number",
             "length":10,
             "optional":false
             },
         {
             "seq":3,
             "name":"is_bb_define",
-            "define":1,
+            "define":"text",
             "length":1,
             "optional":true
         }
