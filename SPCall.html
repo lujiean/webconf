@@ -10,7 +10,10 @@
 <body>
    <div ng-app="SPCall" ng-controller="SPCtrl">
       <!-- drop dow list TBC -->
-      <table ng-repeat="i in sps">
+
+      select a SP: <select ng-model="selectedSP" ng-options="i.name for i in sps"></select>
+      <!-- <table border = "1" ng-repeat="i in sps"> -->
+      <table frame = "box" rules = "all" id='tbl1'>
          <!-- <tr >
             <td>{{ i.name }}</td> -->
          <!-- <td>{{ i.listOfColumns }}</td> -->
@@ -25,43 +28,59 @@
          <tr>
             <td>
                <!-- <p>use create input tag</p> -->
-               call {{i.name}} (
-                  <div ng-repeat="j in i.listOfColumns">
+               call {{selectedSP.name}} (
+                  <div ng-repeat="j in selectedSP.listOfColumns">
                    <!-- <input type="checkDefine()" placeholder={{j.name}} ng-model="$parent.i.listOfColumns[$index].{{j.name}}">, -->
                    <!-- <p ng-hide="{{ checkType(j.define) }}" ng-value='"'> -->
                         <!-- <div>"</div> -->
-                     <div style="display:inline" ng-if="j.define == 'text'">"</div><!--
-                     --><input type="{{j.define}}" placeholder={{j.name}} ng-model="$parent.LOCs[$index].val"><!--
-                     --><div style="display:inline"  ng-if="j.define == 'text'">"</div><!--
-                     --><div style="display:inline" ng-if="$index != (i.listOfColumns.length-1)">,</div>
-                  </div>
+                     <div style="display:inline" ng-if="j.define == 'text'">'</div><!--
+                     --><input type="{{j.define}}" placeholder={{j.name}} ng-model="$parent.LOCs[$index]"><!--
+                     --><div style="display:inline"  ng-if="j.define == 'text'">'</div><!--
+                     --><div style="display:inline" ng-if="$index != (j.listOfColumns.length-1)">,</div>
+                  <!-- </div> -->
                );
             </td> 
-         </tr>
-         <hr>
-         <tr>
+         <!-- </tr> -->
+         <!-- <tr> -->
             <td>
                   <!-- <p>use create input tag</p> -->
-               call {{i.name}} (
-                  <div ng-repeat="j in i.listOfColumns">
+               call {{selectedSP.name}} (
+                  <div ng-repeat="j in selectedSP.listOfColumns">
                       <!-- <input type="checkDefine()" placeholder={{j.name}} ng-model="$parent.i.listOfColumns[$index].{{j.name}}">, -->
                       <!-- <p ng-hide="{{ checkType(j.define) }}" ng-value='"'> -->
                            <!-- <div>"</div> -->
-                     <div style="display:inline" ng-if="j.define == 'text'">"</div><!--
-                     -->{{ LOCs[$index].val }}<!--
-                     --><div style="display:inline"  ng-if="j.define == 'text'">"</div><!--
+                     <div style="display:inline" ng-if="j.define == 'text'">'</div><!--
+                     --><div style="display:inline" ng-if="!LOCs[$index] && j.define != 'text'">null</div><!--
+                     --><div style="display:inline" ng-if="LOCs[$index]">{{LOCs[$index]}}</div><!--
+                     --><div style="display:inline"  ng-if="j.define == 'text'">'</div><!--
                      --><div style="display:inline" ng-if="$index != (i.listOfColumns.length-1)">,</div>
                   </div>
                );
             </td> 
+            <!-- <td>
+               <p>{{testVar}}<p>
+            </td> -->
+            <td>
+               <button type="button" ng-click="AddQuery()"> Add Query</button><br>
+               <button type="button" ng-click="DelQuerys()"> Delete All Queries</button><br>
+               <button type="button"> Copy to ClickBoard</button>
+            </td>
+            <td>
+                  select a Saved Query: <select ng-model="selectedQuery" ng-options="i.seq for i in SavedQueries"></select>
+                  <p>
+                     {{selectedQuery.sql}}
+                  </p>
+            </td>
          </tr>
       </table>
       <hr>
-   <!-- <p ng-repeat="i in sps">
-      {{ i.seq }}
-      {{ i. listOfColumns }}
+   <p ng-repeat="i in LOCs">
+       {{ i }}
    </p>
-   <hr> -->
+   
+   <hr>
+   {{ LOCs[0] }}
+   
       <!-- <table>
          <tr ng-repeat="i in lsps">
             <td>{{ i.name }}</td>

@@ -107,28 +107,84 @@ angular.module('SPCall', [])
         $scope.sps = response.data;
     });
 
-    function checkDefine(d){
-        var rtn_type = "";
-        switch (d) {
-            case 1:
-            rtn_type = "text";
-                break;
-        
-                case 2:
-                rtn_type = "number";
-            default:
-                break;
+    $scope.SavedQueries=[
+        // {seq: 1, sql: "test"}
+    ];
+    $scope.LOCs = [
+
+    ];
+    $scope.AddQuery = function () {
+        // get sql
+        var lsql = "call " + $scope.selectedSP.name + " (";
+        for (i = 0; i < $scope.selectedSP.listOfColumns.length; i++) {
+            var def = $scope.selectedSP.listOfColumns[i];
+            var v = $scope.LOCs[i];
+            if (def.define == "text")
+                lsql = lsql + "'";
+            
+            if(isUndefinedOrNull(v) && def.define == "number")
+                lsql = lsql + "null";
+            else
+                if (isUndefinedOrNull(v))
+                    lsql = lsql;
+                else
+                    lsql = lsql + v;
+
+            if (def.define == "text")
+                lsql = lsql + "'";
+
+            if(i < ($scope.selectedSP.listOfColumns.length - 1))
+                lsql = lsql + ",";
         }
-        return rtn_type;
+        lsql = lsql + ");";
+
+        //save
+        var sq = {
+            seq: $scope.SavedQueries.length+1,
+            sql: lsql
+        };
+
+        $scope.SavedQueries.push(sq);
+        $scope.selectedQuery = sq;
     }
 
-    function checkQuoteShow(d){
-        if (d == "text"){
-            return true;
-        }else{
-            return false;
-        }
+    $scope.DelQuerys = function () {
+        $scope.SavedQueries.splice(0);
     }
+
+    // $scope.LOC_VAL = "abc";
+    //     return "abc"
+    //   };
+
+    // $scope.LOC_VAL = function(index){
+    //     if(isUndefinedOrNull($scope.LOCs[index].val))
+    //         return "null"
+    //     else
+    //         return $scope.LOCs[index].val;
+    //   };
+
+    // function checkDefine(d){
+    //     var rtn_type = "";
+    //     switch (d) {
+    //         case 1:
+    //         rtn_type = "text";
+    //             break;
+        
+    //             case 2:
+    //             rtn_type = "number";
+    //         default:
+    //             break;
+    //     }
+    //     return rtn_type;
+    // }
+
+    // function checkQuoteShow(d){
+    //     if (d == "text"){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
 
     // AddElement("text");
 
@@ -142,3 +198,11 @@ angular.module('SPCall', [])
     //     TemO.appendChild(newline);  
     //     }  
 })
+
+function isUndefinedOrNull(a){
+  if (!a || typeof(a) == 'undefined' ){
+      return true;
+  } else {
+      return false;
+  }
+};

@@ -24,4 +24,24 @@
             "optional":true
         }
     ]
+},
+{
+    "name":"sp_test_2",
+    "listOfColumns":
+    [
+        {
+            "seq":1,
+            "name":"pol_no",
+            "define":"text",
+            "length":16,
+            "optional":false
+            },
+        {
+            "seq":2,
+            "name":"mvmt_no",
+            "define":"number",
+            "length":10,
+            "optional":false
+            }
+    ]
 }]
