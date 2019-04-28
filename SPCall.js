@@ -107,49 +107,136 @@ angular.module('SPCall', [])
         $scope.sps = response.data;
     });
 
+    $scope.now = 0;
+    $scope.setNow = function (num) {
+        $scope.now = num;
+    }
+
     $scope.SavedQueries=[
-        // {seq: 1, sql: "test"}
+            // {
+            //     sp_name: "sp_test", 
+            //     savedsqls: [
+            //         {seq: 1, sql: "test"},
+            //         {seq: 2, sql: "testsql2"}
+            //     ]
+            // },
+            // {
+            //     sp_name: "sp_test2", 
+            //     savedsqls: [
+            //         {seq: 1, sql: "test"},
+            //         {seq: 2, sql: "testsql2"}
+            //     ]
+            // },
     ];
     $scope.LOCs = [
 
     ];
+
+    $scope.isColumnText = function (type) {
+        if (type == "text"){
+            return true;
+        }
+        return false;
+    }
+    $scope.isLastColumn = function (idx) {
+        var max_idx = $scope.selectedSP.listOfColumns.length - 1;
+        if (idx == max_idx){
+            return true;
+        }
+        return false;
+    }
+
     $scope.AddQuery = function () {
         // get sql
-        var lsql = "call " + $scope.selectedSP.name + " (";
-        for (i = 0; i < $scope.selectedSP.listOfColumns.length; i++) {
-            var def = $scope.selectedSP.listOfColumns[i];
-            var v = $scope.LOCs[i];
-            if (def.define == "text")
-                lsql = lsql + "'";
+        // var lsql = "call " + $scope.selectedSP.name + " (";
+        // for (i = 0; i < $scope.selectedSP.listOfColumns.length; i++) {
+        //     var def = $scope.selectedSP.listOfColumns[i];
+        //     var v = $scope.LOCs[i];
+        //     if (def.define == "text")
+        //         lsql = lsql + "'";
             
-            if(isUndefinedOrNull(v) && def.define == "number")
-                lsql = lsql + "null";
-            else
-                if (isUndefinedOrNull(v))
-                    lsql = lsql;
-                else
-                    lsql = lsql + v;
+        //     if(isUndefinedOrNull(v) && def.define == "number")
+        //         lsql = lsql + "null";
+        //     else
+        //         if (isUndefinedOrNull(v))
+        //             lsql = lsql;
+        //         else
+        //             lsql = lsql + v;
 
-            if (def.define == "text")
-                lsql = lsql + "'";
+        //     if (def.define == "text")
+        //         lsql = lsql + "'";
 
-            if(i < ($scope.selectedSP.listOfColumns.length - 1))
-                lsql = lsql + ",";
-        }
-        lsql = lsql + ");";
+        //     if(i < ($scope.selectedSP.listOfColumns.length - 1))
+        //         lsql = lsql + ",";
+        // }
+        // lsql = lsql + ");";
 
         //save
         var sq = {
             seq: $scope.SavedQueries.length+1,
-            sql: lsql
+            // sql: lsql
+            sql: $scope.sp_dtl()
         };
 
         $scope.SavedQueries.push(sq);
-        $scope.selectedQuery = sq;
+        // $scope.selectedQuery = sq;
+        $scope.now = $scope.SavedQueries.length-1;
     }
 
     $scope.DelQuerys = function () {
         $scope.SavedQueries.splice(0);
+    }
+
+    $scope.selectAction = function () {
+        $scope.LOCs = [
+        ];
+        var ta=document.getElementById("t1"); 
+        ta.setAttribute("rows",$scope.selectedSP.listOfColumns.length + 1);
+    }
+    // $scope.sp_dtl = set_sp_dtl();
+    $scope.sp_dtl = function () {
+    // function set_sp_dtl() {
+        var f_sp = "";
+        if (isUndefinedOrNull($scope.selectedSP)){
+            return f_sp;
+        }
+        
+        f_sp = "call " + $scope.selectedSP.name +"(" + "\n";
+        for(i =0;i < $scope.selectedSP.listOfColumns.length;i++){
+            var e = $scope.selectedSP.listOfColumns[i];
+            if (e.define == "text"){
+                f_sp = f_sp + "'";
+            }
+            if(e.define != "text" && isUndefinedOrNull($scope.LOCs[i])){
+                f_sp = f_sp + "null";
+            } else if( !isUndefinedOrNull($scope.LOCs[i])){
+                f_sp = f_sp + $scope.LOCs[i];
+            }
+            if (e.define == "text"){
+                f_sp = f_sp + "'";
+            }
+            if(i < $scope.selectedSP.listOfColumns.length - 1){
+                f_sp = f_sp + ",";
+                f_sp = f_sp + "\n";
+            }else{
+                f_sp = f_sp + ");";
+            }
+        }
+        
+        return f_sp;
+    };
+
+
+    $scope.copyToClickBoard = function () {
+        // 文本框：<input type="text" id="text"/>
+        var Url1=document.getElementById("t1"); 
+        console.log(Url1.value);
+        Url1.select(); //选择对象  
+        var tag = document.execCommand("Copy"); //执行浏览器复制命令  
+        if(tag){
+            // alert("复制成功。")
+            alert("Copy Successed.")
+        };
     }
 
     // $scope.LOC_VAL = "abc";
