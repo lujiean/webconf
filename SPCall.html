@@ -11,9 +11,19 @@
    <div ng-app="SPCall" ng-controller="SPCtrl">
       <!-- drop dow list TBC -->
 
-      select a SP: <select ng-model="selectedSP" 
+      select a SP: 
+      <!-- <select ng-model="selectedSP" 
                            ng-options="i.name for i in sps" 
-                           ng-change="selectAction()"></select>
+                           ng-change="selectAction()"></select> -->
+
+      <!-- <input type="text" ng-change="searchTextValueChange(selectedSP.name)" ng-model="selectedSP.name"  ng-click="searchTextInputClick()">
+      <input type="text" ng-change="searchTextValueChange(searchTextValue)" ng-model="selectedSP"  ng-click="searchTextInputClick()">
+      <div ng-show="showSelect">
+            <select ng-model="selectedSPs" multiple>
+               <option ng-repeat="data in sps" ng-click="selectOptionClick(data)">{{data.name}}</option>
+            </select>
+      </div> -->
+
       <!-- <table border = "1" ng-repeat="i in sps"> -->
       <table frame = "box" rules = "all" id='tbl1'>
          <!-- <tr >
@@ -27,19 +37,20 @@
             <td>{{ j.length }}</td>
             <td>{{ j.optional }}</td>
       </tr> -->
-         <tr>
+         <tr ng-repeat="selectedSP in sps">
             <td>
                <!-- <p>use create input tag</p> -->
                call {{selectedSP.name}} (
                   <div ng-repeat="j in selectedSP.listOfColumns">
+                        <!-- <div ng-repeat="j in sps[$index].listOfColumns"> -->
                    <!-- <input type="checkDefine()" placeholder={{j.name}} ng-model="$parent.i.listOfColumns[$index].{{j.name}}">, -->
                    <!-- <p ng-hide="{{ checkType(j.define) }}" ng-value='"'> -->
                         <!-- <div>"</div> -->
                      <div style="display:inline" ng-if="isColumnText(j.define)">'</div><!--
-                     --><input type="{{j.define}}" placeholder={{j.name}} ng-model="$parent.LOCs[$index]"><!--
+                     --><input type="{{j.define}}" placeholder={{j.name}} ng-model="$parent.$parent.SLCSP[$parent.$index].LOCs[$index]" ng-change="setDTLText($parent.$index)"><!--
                      --><div style="display:inline"  ng-if="isColumnText(j.define)">'</div><!--
-                     --><div style="display:inline" ng-if="!isLastColumn($index)">,</div><!--
-                     --><div style="display:inline" ng-if="isLastColumn($index)">);</div>
+                     --><div style="display:inline" ng-if="!isLastColumn($index, sps[$index].listOfColumns.length)">,</div><!--
+                     --><div style="display:inline" ng-if="isLastColumn($index, sps[$index].listOfColumns.length)">);</div>
                   <!-- </div> -->
             </td> 
          <!-- </tr> -->
@@ -61,16 +72,18 @@
                <!-- use ng-value bind to a function -->
                <!-- <input type = "text" id = "t1" ng-value = "sp_dtl()" readOnly = true> -->
                
-               <textarea id = "t1" readOnly = true>{{ sp_dtl() }}</textarea>
+               <!-- <textarea id = "t1" readOnly = true>{{ sp_dtl() }}</textarea> -->
+               <!-- <textarea id = "t1" readOnly = true >{{ sp_dtl }}</textarea> -->
+               <textarea id = "tempID" readOnly = true ng-model="$parent.sp_dtls[$index]" ng-init="selectAction($index)"></textarea>
             </td> 
             <!-- <td>
                <p>{{testVar}}<p>
             </td> -->
             <td>
-               <button type="button" ng-click="AddQuery()"> Add Query</button><br>
-               <button type="button" ng-click="DelQuerys()"> Delete All Queries</button><br>
+               <button type="button" ng-click="AddQuery($index)"> Add Query</button><br>
+               <button type="button" ng-click="DelQuerys($index)"> Delete All Queries</button><br>
                <br>
-               <button type="button" ng-click="copyToClickBoard()"> Copy to ClickBoard</button>
+               <button type="button" ng-click="copyToClickBoard($index)"> Copy to ClickBoard</button>
             </td>
             <td>
                   <!-- select a Saved Query: <select ng-model="selectedQuery" ng-options="i.seq for i in SavedQueries"></select>
@@ -81,7 +94,7 @@
                   <!-- <div class="box"> -->
                   <div>
                      <!-- <input type="button" ng-repeat="(k,v) in items" value="{{k}}" class="{{$index==now?'active':''}}" ng-click="setNow($index)" /> -->
-                     <input type="button" ng-repeat="(k,v) in SavedQueries" value="{{k}}" ng-click="setNow($index)" />
+                     <input type="button" ng-repeat="(k,v) in SavedQueries[$index].savedsqls" value="{{k}}" ng-click="setNow($parent.$index, $index)" />
          
          
                      <!--angularjs中的bug
@@ -90,7 +103,7 @@
          
                      <!-- <div class="{{$index==now?'cur':''}}" ng-repeat="v in items"> -->
                      <div>
-                         {{SavedQueries[now].sql}}
+                         {{SavedQueries[$index].savedsqls[now[$index]].sql}}
                      </div>
          
                  </div>

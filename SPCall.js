@@ -101,36 +101,40 @@ angular.module('SPCall', [])
         ]
     }];
 
+    $scope.copySelectData = $scope.sps;
+
     $http.get('SPInput.json').
     then(function(response) {
         // $scope.greeting = response.data;
         $scope.sps = response.data;
     });
 
-    $scope.now = 0;
-    $scope.setNow = function (num) {
-        $scope.now = num;
+    $scope.now = [];
+    $scope.setNow = function (pidx,num) {
+        $scope.now[pidx] = num;
     }
 
     $scope.SavedQueries=[
-            // {
-            //     sp_name: "sp_test", 
-            //     savedsqls: [
-            //         {seq: 1, sql: "test"},
-            //         {seq: 2, sql: "testsql2"}
-            //     ]
-            // },
-            // {
-            //     sp_name: "sp_test2", 
-            //     savedsqls: [
-            //         {seq: 1, sql: "test"},
-            //         {seq: 2, sql: "testsql2"}
-            //     ]
-            // },
+            {
+                sp_name: "sp_test", 
+                savedsqls: [
+                    {seq: 1, sql: "test"},
+                    {seq: 2, sql: "testsql2"}
+                ]
+            },
+            {
+                sp_name: "sp_test2", 
+                savedsqls: [
+                    {seq: 1, sql: "test"},
+                    {seq: 2, sql: "testsql2"}
+                ]
+            }
     ];
     $scope.LOCs = [
 
     ];
+
+    $scope.selectedSP = null;
 
     $scope.isColumnText = function (type) {
         if (type == "text"){
@@ -138,15 +142,15 @@ angular.module('SPCall', [])
         }
         return false;
     }
-    $scope.isLastColumn = function (idx) {
-        var max_idx = $scope.selectedSP.listOfColumns.length - 1;
+    $scope.isLastColumn = function (idx, length) {
+        var max_idx = length - 1;
         if (idx == max_idx){
             return true;
         }
         return false;
     }
 
-    $scope.AddQuery = function () {
+    $scope.AddQuery = function (idx) {
         // get sql
         // var lsql = "call " + $scope.selectedSP.name + " (";
         // for (i = 0; i < $scope.selectedSP.listOfColumns.length; i++) {
@@ -173,49 +177,64 @@ angular.module('SPCall', [])
 
         //save
         var sq = {
-            seq: $scope.SavedQueries.length+1,
+            seq: $scope.SavedQueries[idx].savedsqls.length+1,
             // sql: lsql
-            sql: $scope.sp_dtl()
+            sql: $scope.sp_dtl(idx)
         };
 
-        $scope.SavedQueries.push(sq);
+        $scope.SavedQueries[idx].savedsqls.push(sq);
         // $scope.selectedQuery = sq;
-        $scope.now = $scope.SavedQueries.length-1;
+        $scope.now[idx] = $scope.SavedQueries[idx].savedsqls.length-1;
     }
 
-    $scope.DelQuerys = function () {
-        $scope.SavedQueries.splice(0);
+    $scope.DelQuerys = function (idx) {
+        $scope.SavedQueries[idx].savedsqls.splice(0);
     }
 
-    $scope.selectAction = function () {
-        $scope.LOCs = [
-        ];
-        var ta=document.getElementById("t1"); 
-        ta.setAttribute("rows",$scope.selectedSP.listOfColumns.length + 1);
+    // $scope.selectAction = function () {
+    $scope.selectAction = function (idx) {
+        // $scope.LOCs = [
+        // ];
+        // var ta=document.getElementById("t1"); 
+        // var id="t[$index]"
+        var id="tempID";
+        var newID="t[" + idx + "]";
+        var ta=document.getElementById(id);
+        ta.setAttribute("rows",$scope.sps[idx].listOfColumns.length + 1);
+        ta.setAttribute("id",newID);
     }
     // $scope.sp_dtl = set_sp_dtl();
-    $scope.sp_dtl = function () {
+    // $scope.sp_dtls = [{desc: "abc"}];
+    $scope.sp_dtls = [
+        
+    ];
+    $scope.setDTLText = function (idx) {
+        // var sp_text = sp_dtl(idx);
+        $scope.sp_dtls[idx] = $scope.sp_dtl(idx);
+        // $scope.selectAction(idx);
+    }
+    $scope.sp_dtl = function (idx) {
     // function set_sp_dtl() {
         var f_sp = "";
-        if (isUndefinedOrNull($scope.selectedSP)){
-            return f_sp;
-        }
+        // if (isUndefinedOrNull($scope.selectedSP)){
+        //     return f_sp;
+        // }
         
-        f_sp = "call " + $scope.selectedSP.name +"(" + "\n";
-        for(i =0;i < $scope.selectedSP.listOfColumns.length;i++){
-            var e = $scope.selectedSP.listOfColumns[i];
+        f_sp = "call " + $scope.sps[idx].name +"(" + "\n";
+        for(i =0;i < $scope.sps[idx].listOfColumns.length;i++){
+            var e = $scope.sps[idx].listOfColumns[i];
             if (e.define == "text"){
                 f_sp = f_sp + "'";
             }
-            if(e.define != "text" && isUndefinedOrNull($scope.LOCs[i])){
+            if(e.define != "text" && isUndefinedOrNull($scope.SLCSP[idx].LOCs[i])){
                 f_sp = f_sp + "null";
-            } else if( !isUndefinedOrNull($scope.LOCs[i])){
-                f_sp = f_sp + $scope.LOCs[i];
+            } else if( !isUndefinedOrNull($scope.SLCSP[idx].LOCs[i])){
+                f_sp = f_sp + $scope.SLCSP[idx].LOCs[i];
             }
             if (e.define == "text"){
                 f_sp = f_sp + "'";
             }
-            if(i < $scope.selectedSP.listOfColumns.length - 1){
+            if(i < $scope.sps[idx].listOfColumns.length - 1){
                 f_sp = f_sp + ",";
                 f_sp = f_sp + "\n";
             }else{
@@ -227,9 +246,10 @@ angular.module('SPCall', [])
     };
 
 
-    $scope.copyToClickBoard = function () {
+    $scope.copyToClickBoard = function (idx) {
         // 文本框：<input type="text" id="text"/>
-        var Url1=document.getElementById("t1"); 
+        var id = "t[" + idx + "]";
+        var Url1=document.getElementById(id); 
         console.log(Url1.value);
         Url1.select(); //选择对象  
         var tag = document.execCommand("Copy"); //执行浏览器复制命令  
@@ -238,6 +258,45 @@ angular.module('SPCall', [])
             alert("Copy Successed.")
         };
     }
+
+    $scope.searchTextInputClick = function () {
+        if($scope.sps.length>1){
+            $scope.showSelect = true;
+        }
+    };
+
+    /**
+     * 将下拉选的数据值赋值给文本框，并且隐藏下拉框
+     */
+    // $scope.selectOptionClick = function (selectValue) {
+    //     //因为加了多选属性防止多选点击置空数组再加数据 //不加multiple多选属性不现实下拉范围
+    //     $scope.selectedSPs = [];
+    //     $scope.selectedSPs.push(selectValue);
+    //     $scope.showSelect = false;  //下拉框隐藏
+    //     $scope.selectedSP = $scope.selectedSPs[0];   //文本框中的值
+        
+    //     $scope.selectAction();
+    // };
+            /**
+         * 获取的数据值与下拉选逐个比较，如果包含则放在临时变量副本，并用临时变量副本替换下拉选原先的数值，如果数据为空或找不到，就用初始下拉选项副本替换
+         */
+        // $scope.searchTextValueChange = function (searchTextValue) {
+        //     if(searchTextValue === "" || searchTextValue === undefined){
+        //         $scope.sps = $scope.copySelectData;
+        //         return;
+        //     }
+        //     //正则匹配，不是中文不筛选数据
+        //     if(new RegExp("[^\\u4E00-\\u9FA5]+").test(searchTextValue)){
+        //         return;
+        //     }
+        //     var newData = [];  //创建一个临时下拉框副本
+        //     angular.forEach($scope.sps, function (data) {
+        //         if (data.indexOf(searchTextValue)>=0){
+        //             newData.push(data);
+        //         }
+        //     });
+        //     $scope.sps = newData; //newData中的数值赋值给$scope.selectData
+        // };
 
     // $scope.LOC_VAL = "abc";
     //     return "abc"
