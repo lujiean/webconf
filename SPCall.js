@@ -130,11 +130,11 @@ angular.module('SPCall', [])
             //     ]
             // }
     ];
-    $scope.LOCs = [
+    // $scope.LOCs = [
 
-    ];
+    // ];
 
-    $scope.selectedSP = null;
+    // $scope.selectedSP = null;
 
     $scope.isColumnText = function (type) {
         if (type == "text"){
@@ -267,11 +267,11 @@ angular.module('SPCall', [])
         };
     }
 
-    $scope.searchTextInputClick = function () {
-        if($scope.sps.length>1){
-            $scope.showSelect = true;
-        }
-    };
+    // $scope.searchTextInputClick = function () {
+    //     if($scope.sps.length>1){
+    //         $scope.showSelect = true;
+    //     }
+    // };
 
     /**
      * 将下拉选的数据值赋值给文本框，并且隐藏下拉框

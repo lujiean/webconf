@@ -6,21 +6,21 @@
             "seq":1,
             "name":"pol_no",
             "define":"text",
-            "length":16,
+            "len":16,
             "optional":false
             },
         {
             "seq":2,
             "name":"mvmt_no",
             "define":"number",
-            "length":10,
+            "len":10,
             "optional":false
             },
         {
             "seq":3,
             "name":"is_bb_define",
             "define":"text",
-            "length":1,
+            "len":1,
             "optional":true
         }
     ]
@@ -33,14 +33,14 @@
             "seq":1,
             "name":"pol_no",
             "define":"text",
-            "length":16,
+            "len":16,
             "optional":false
             },
         {
             "seq":2,
             "name":"mvmt_no",
             "define":"number",
-            "length":10,
+            "len":10,
             "optional":false
             }
     ]
