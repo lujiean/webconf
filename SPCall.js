@@ -115,20 +115,20 @@ angular.module('SPCall', [])
     }
 
     $scope.SavedQueries=[
-            {
-                sp_name: "sp_test", 
-                savedsqls: [
-                    {seq: 1, sql: "test"},
-                    {seq: 2, sql: "testsql2"}
-                ]
-            },
-            {
-                sp_name: "sp_test2", 
-                savedsqls: [
-                    {seq: 1, sql: "test"},
-                    {seq: 2, sql: "testsql2"}
-                ]
-            }
+            // {
+            //     sp_name: "sp_test", 
+            //     savedsqls: [
+            //         {seq: 1, sql: "test"},
+            //         {seq: 2, sql: "testsql2"}
+            //     ]
+            // },
+            // {
+            //     sp_name: "sp_test2", 
+            //     savedsqls: [
+            //         {seq: 1, sql: "test"},
+            //         {seq: 2, sql: "testsql2"}
+            //     ]
+            // }
     ];
     $scope.LOCs = [
 
@@ -197,11 +197,19 @@ angular.module('SPCall', [])
         // ];
         // var ta=document.getElementById("t1"); 
         // var id="t[$index]"
+        // set textarea
         var id="tempID";
         var newID="t[" + idx + "]";
         var ta=document.getElementById(id);
         ta.setAttribute("rows",$scope.sps[idx].listOfColumns.length + 1);
         ta.setAttribute("id",newID);
+        // set saved queries
+        var sq = {
+            sp_name: $scope.sps[idx].name,
+            savedsqls: [
+            ]
+        }
+        $scope.SavedQueries[idx] = sq;
     }
     // $scope.sp_dtl = set_sp_dtl();
     // $scope.sp_dtls = [{desc: "abc"}];
